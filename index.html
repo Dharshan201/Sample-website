@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Paratha Paradise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff8f0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #e17055;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 0 1rem 0;
+      margin-bottom: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 2em;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(100,50,0,0.08);
+    }
+    h2 {
+      color: #d35400;
+      border-bottom: 1px dashed #fdcb6e;
+      padding-bottom: 0.3em;
+    }
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5em;
+      margin: 1.5em 0;
+    }
+    .item {
+      flex: 1 1 220px;
+      border: 1px solid #fdcb6e;
+      border-radius: 10px;
+      padding: 1em;
+      background: #fffbe6;
+      box-shadow: 0 2px 6px rgba(252,187,65,0.08);
+      text-align: center;
+    }
+    .item h3 {
+      color: #e17055;
+      margin-top: 0;
+    }
+    button {
+      background: #e17055;
+      color: #fff;
+      border: none;
+      padding: 0.6em 1.8em;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 1em;
+    }
+    button:hover {
+      background: #d35400;
+    }
+    footer {
+      text-align: center;
+      color: #888;
+      margin: 2rem 0 1rem 0;
+      font-size: 0.9em;
+    }
+    @media (max-width:600px) {
+      .menu {
+        flex-direction: column;
+      }
+      .container {
+        padding: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Paratha Paradise</h1>
+    <p>Delicious Homemade Parathas, Hot & Fresh Every Day!</p>
+  </header>
+  <div class="container">
+    <h2>Our Menu</h2>
+    <div class="menu">
+      <div class="item">
+        <h3>Aloo Paratha</h3>
+        <p>Classic potato stuffed paratha with a hint of coriander and spices.</p>
+        <strong>₹65</strong><br>
+        <button onclick="order('Aloo Paratha')">Order</button>
+      </div>
+      <div class="item">
+        <h3>Paneer Paratha</h3>
+        <p>Soft paneer & herbs filled paratha, served with curd and achar.</p>
+        <strong>₹80</strong><br>
+        <button onclick="order('Paneer Paratha')">Order</button>
+      </div>
+      <div class="item">
+        <h3>Mix Veg Paratha</h3>
+        <p>Loaded with seasonal vegetables, a healthy and tasty option.</p>
+        <strong>₹70</strong><br>
+        <button onclick="order('Mix Veg Paratha')">Order</button>
+      </div>
+      <div class="item">
+        <h3>Onion Cheese Paratha</h3>
+        <p>Melty cheese and onions, a treat for cheese lovers!</p>
+        <strong>₹85</strong><br>
+        <button onclick="order('Onion Cheese Paratha')">Order</button>
+      </div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Paratha Paradise. All Rights Reserved.
+  </footer>
+  <script>
+    function order(parathaName) {
+      alert("Thank you for ordering a " + parathaName + "! We'll prepare it fresh for you.");
+    }
+  </script>
+</body>
+</html>
