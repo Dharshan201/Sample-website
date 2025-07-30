@@ -2,125 +2,263 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Paratha Paradise</title>
+  <title>Paratha Paradise - Order Online</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fff8f0;
-      margin: 0;
-      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f9e6d3, #f4b393);
+      margin: 0; padding: 0; color: #4a2c2a;
     }
     header {
-      background: #e17055;
-      color: #fff;
-      text-align: center;
-      padding: 2rem 0 1rem 0;
-      margin-bottom: 2rem;
+      background: #d35400; color: #fff;
+      text-align: center; padding: 2.8rem 1rem 2rem;
+      box-shadow: 0 4px 15px rgba(211,84,0,.18);
+    }
+    .cart-icon {
+      position: absolute; right: 25px; top: 30px; cursor:pointer;
+      background:rgba(255,255,255,0.7); border-radius: 50%; width:60px; height:60px;
+      display:flex; align-items:center; justify-content:center; z-index:2;
+      box-shadow:0 2px 8px rgba(211, 84, 0, 0.07);
+    }
+    .cart-icon img { width:32px; }
+    .cart-count {
+      position: absolute; bottom:10px; right:18px; background:#e67e22; color:#fff;
+      font-size:16px; border-radius:50%; width:25px; height:25px;
+      display:flex; align-items:center; justify-content:center; font-weight:700;
+      border:2px solid #fff;
     }
     .container {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      padding: 2em;
-      border-radius: 12px;
-      box-shadow: 0 2px 15px rgba(100,50,0,0.08);
+      max-width: 1000px; margin: 2.5rem auto 5rem; background: #fff9f4;
+      padding: 2.5rem 2rem; border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(211,84,0,0.11);
     }
     h2 {
-      color: #d35400;
-      border-bottom: 1px dashed #fdcb6e;
-      padding-bottom: 0.3em;
+      color: #d35400; border-bottom: 3px solid #f4a261;
+      padding-bottom: .5em; font-size: 2rem; margin-bottom: 2rem;
+      text-transform: uppercase; letter-spacing: 1.4px;
     }
     .menu {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5em;
-      margin: 1.5em 0;
+      display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;
     }
     .item {
-      flex: 1 1 220px;
-      border: 1px solid #fdcb6e;
-      border-radius: 10px;
-      padding: 1em;
-      background: #fffbe6;
-      box-shadow: 0 2px 6px rgba(252,187,65,0.08);
-      text-align: center;
+      flex: 1 1 230px;
+      background: linear-gradient(145deg,#fff5e8,#ffdabc);
+      border-radius: 13px; padding: 1.2rem; text-align: center;
+      box-shadow: 0 4px 18px rgba(241, 140, 51, 0.13);
+      transition: transform .16s, box-shadow .16s;
     }
-    .item h3 {
-      color: #e17055;
-      margin-top: 0;
+    .item:hover { transform: translateY(-7px) scale(1.01); box-shadow: 0 10px 25px rgba(211, 84, 0, 0.17);}
+    .item img {
+      max-width:120px; height:100px; object-fit:cover; border-radius:8px; 
+      display:block; margin:0 auto 1rem;
+      box-shadow:0 2px 8px rgba(211,84,0,0.10);
     }
-    button {
-      background: #e17055;
-      color: #fff;
-      border: none;
-      padding: 0.6em 1.8em;
-      border-radius: 6px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 1em;
+    .item h3 { margin: .5rem 0 0; font-size: 1.18rem; color:#c04518;}
+    .item p {font-size: 0.98rem; color:#7a574a; margin:0.7rem 0; min-height:44px;}
+    .price { font-size: 1.15rem; color:#d35400; font-weight:700; letter-spacing:.5px;}
+    .item button {
+      background:#d35400; border:none; color:#fff; padding:.6em 2em; font-size:1rem;
+      border-radius:25px; cursor:pointer; margin-top:1em;
+      font-weight:600; transition: background .2s,transform .16s;
+      box-shadow:0 2px 6px rgba(211,84,0,0.08);
     }
-    button:hover {
-      background: #d35400;
+    .item button:hover{ background:#bf4f11; transform:scale(1.04);}
+    /* CART */
+    .cart-panel {
+      display:none; position:fixed; top:0; right:0; height:100vh; width:370px; max-width:98vw;
+      background:#fff9f4; box-shadow:-5px 0 30px rgba(84,44,0,0.14);
+      z-index:9999; padding:2.4rem 1.6rem; overflow-y:auto;
+      transition:transform .35s cubic-bezier(.97,.16,.44,1.14);
     }
+    .cart-panel.open{ display:block; animation:slideIn .3s;}
+    @keyframes slideIn { from{transform:translateX(100%);} to{transform:translateX(0);} }
+    .cart-panel h3 {text-align:center; font-size:1.3rem; color:#d35400;}
+    .cart-item {
+      display:flex; gap:1rem; align-items:center; margin:1.2rem 0;
+      border-bottom:1px solid #f5c394; padding-bottom:.8rem;
+    }
+    .cart-item img { width:54px; height:45px; border-radius:7px; object-fit:cover;}
+    .cart-item-detail{flex:1;}
+    .cart-item-detail>div{font-size:.98rem;}
+    .cart-qty {
+      display:flex; align-items:center; gap:7px; margin:.3rem 0;
+    }
+    .qty-btn{
+      background: #ffdabc; border:none; font-size:1em; border-radius:50%;
+      width: 27px; height: 27px; cursor:pointer; font-weight:700; color:#d35400;
+      transition: background .13s;
+    }
+    .qty-btn:hover{background:#fcc282;}
+    .cart-remove {
+      background:none; border:none; color:#d35400; font-size:1.3rem; font-weight:700; cursor:pointer;
+      margin-left:7px;
+    }
+    .cart-summary{margin:1.5em 0; font-size:1.08rem;}
+    .cart-buttons {display:flex; gap:1rem; justify-content:center; margin-top:.8rem;}
+    .close-cart {
+      background:none; border:none; position:absolute; top:20px; right:26px; font-size:2rem;
+      color:#884a13; font-weight:700; cursor:pointer;
+    }
+    .cart-buy {
+      padding:.7em 2em; font-size:1.1em; border-radius:25px; background:#d35400;
+      color:#fff; border:none; cursor:pointer; font-weight:600;
+      transition:background .17s;
+    }
+    .cart-buy:hover{background:#a83b05;}
     footer {
-      text-align: center;
-      color: #888;
-      margin: 2rem 0 1rem 0;
-      font-size: 0.9em;
+      text-align:center; color:#d35400; padding:2rem 1rem; font-weight:600;
+      letter-spacing:.5px; font-size:.97rem; background:#fff9f4;
+      box-shadow:inset 0 1px 0 #ffd2b3; margin-top:-2rem;
     }
-    @media (max-width:600px) {
-      .menu {
-        flex-direction: column;
-      }
-      .container {
-        padding: 1em;
-      }
+    @media (max-width:600px){
+      .container{ padding: 1rem;}
+      .menu{ flex-direction: column; gap:1.6rem;}
+      .cart-panel{width:100vw; max-width:99vw;}
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Paratha Paradise</h1>
-    <p>Delicious Homemade Parathas, Hot & Fresh Every Day!</p>
+    <p>Delicious Homemade Parathas, Hot &amp; Fresh - Now Order Online!</p>
+    <div class="cart-icon" id="cartToggle">
+      <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Cart">
+      <div class="cart-count" id="cartCount">0</div>
+    </div>
   </header>
   <div class="container">
     <h2>Our Menu</h2>
-    <div class="menu">
-      <div class="item">
-        <h3>Aloo Paratha</h3>
-        <p>Classic potato stuffed paratha with a hint of coriander and spices.</p>
-        <strong>₹65</strong><br>
-        <button onclick="order('Aloo Paratha')">Order</button>
-      </div>
-      <div class="item">
-        <h3>Paneer Paratha</h3>
-        <p>Soft paneer & herbs filled paratha, served with curd and achar.</p>
-        <strong>₹80</strong><br>
-        <button onclick="order('Paneer Paratha')">Order</button>
-      </div>
-      <div class="item">
-        <h3>Mix Veg Paratha</h3>
-        <p>Loaded with seasonal vegetables, a healthy and tasty option.</p>
-        <strong>₹70</strong><br>
-        <button onclick="order('Mix Veg Paratha')">Order</button>
-      </div>
-      <div class="item">
-        <h3>Onion Cheese Paratha</h3>
-        <p>Melty cheese and onions, a treat for cheese lovers!</p>
-        <strong>₹85</strong><br>
-        <button onclick="order('Onion Cheese Paratha')">Order</button>
-      </div>
+    <div class="menu" id="menuList">
+      <!-- Example Products -->
+    </div>
+  </div>
+  <div class="cart-panel" id="cartPanel">
+    <button class="close-cart" id="closeCart">&times;</button>
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <div class="cart-summary">
+      <span>Total: ₹<span id="cartTotal">0</span></span>
+    </div>
+    <div class="cart-buttons">
+      <button class="cart-buy" id="buyBtn">Buy Now</button>
     </div>
   </div>
   <footer>
     &copy; 2025 Paratha Paradise. All Rights Reserved.
   </footer>
   <script>
-    function order(parathaName) {
-      alert("Thank you for ordering a " + parathaName + "! We'll prepare it fresh for you.");
+    // --- PRODUCTS (replace image URLs with real for best results) ---
+    const menu = [
+      {
+        name: "Aloo Paratha",
+        desc: "Classic potato-stuffed, with coriander & spice.",
+        img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
+        price: 65
+      },
+      {
+        name: "Paneer Paratha",
+        desc: "Paneer & herbs paratha - includes curd, achar.",
+        img: "https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=400&q=80",
+        price: 80
+      },
+      {
+        name: "Mix Veg Paratha",
+        desc: "Loaded with veggies. Hearty & healthy.",
+        img: "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=400&q=80",
+        price: 70
+      },
+      {
+        name: "Onion Cheese Paratha",
+        desc: "Melted cheese & onion for cheese lovers.",
+        img: "https://images.unsplash.com/photo-1519864600265-abb23847ef3f?auto=format&fit=crop&w=400&q=80",
+        price: 85
+      },
+    ];
+    // -- Render Menu --
+    const menuList = document.getElementById('menuList');
+    menu.forEach((item, idx) => {
+      menuList.innerHTML += `
+        <div class="item">
+          <img src="${item.img}" alt="${item.name}">
+          <h3>${item.name}</h3>
+          <p>${item.desc}</p>
+          <div class="price">₹${item.price}</div>
+          <button onclick="addToCart(${idx})">Add to Cart</button>
+        </div>
+      `;
+    });
+
+    // --- Cart ---
+    let cart = [];
+    const cartCount = document.getElementById('cartCount');
+    const cartPanel = document.getElementById('cartPanel');
+    const cartItemsDiv = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const buyBtn = document.getElementById('buyBtn');
+
+    function addToCart(idx) {
+      const prod = menu[idx];
+      const i = cart.findIndex(item=>item.name===prod.name);
+      if(i>-1) { cart[i].qty++; }
+      else { cart.push({...prod,qty:1}); }
+      updateCart();
     }
+    function removeFromCart(idx) {
+      cart.splice(idx,1);
+      updateCart();
+    }
+    function changeQty(idx,delta) {
+      cart[idx].qty+=delta;
+      if(cart[idx].qty<=0){ removeFromCart(idx);}
+      else{ updateCart();}
+    }
+    function updateCart() {
+      let total=0, cnt=0;
+      cartItemsDiv.innerHTML='';
+      cart.forEach((prod,i)=>{
+        total += prod.price*prod.qty; cnt+=prod.qty;
+        cartItemsDiv.innerHTML += `
+          <div class="cart-item">
+            <img src="${prod.img}" alt="${prod.name}">
+            <div class="cart-item-detail">
+              <div>${prod.name}</div>
+              <div class="cart-qty">
+                <button class="qty-btn" onclick="changeQty(${i},-1)">-</button>
+                <span>${prod.qty}</span>
+                <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+              </div>
+              <div>₹${prod.price} x ${prod.qty} = ₹${prod.price*prod.qty}</div>
+            </div>
+            <button class="cart-remove" onclick="removeFromCart(${i})">&times;</button>
+          </div>
+        `;
+      });
+      cartCount.textContent = cnt;
+      cartTotal.textContent = total;
+      if(cart.length===0){cartItemsDiv.innerHTML='<p>Your cart is empty.</p>';}
+    }
+    // -- Cart toggle --
+    document.getElementById('cartToggle').onclick = () => {
+      updateCart();
+      cartPanel.classList.add('open');
+    };
+    document.getElementById('closeCart').onclick = () => {
+      cartPanel.classList.remove('open');
+    };
+    // -- Buy "checkout" demo --
+    buyBtn.onclick = () => {
+      if(cart.length===0){ alert("Your cart is empty!"); return;}
+      alert("Thank you for your purchase! Your order is placed 😊");
+      cart = [];
+      updateCart();
+      cartPanel.classList.remove('open');
+    };
+    // -- Expose cart methods globally --
+    window.addToCart = addToCart;
+    window.changeQty = changeQty;
+    window.removeFromCart = removeFromCart;
   </script>
 </body>
 </html>
